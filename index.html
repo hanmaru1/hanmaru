@@ -11073,7 +11073,7 @@ function mCloseMore(){
     if(data && Array.isArray(data)){
       window.churchList = data;
       try{ localStorage.setItem('pm_church', JSON.stringify(data)); }catch(e){}
-      if(window._fbReady && typeof renderChurchList === 'function'){
+      if(typeof renderChurchList === 'function'){
         renderChurchList();
         if(typeof renderChurchSummary === 'function') renderChurchSummary();
       }
@@ -11090,7 +11090,9 @@ function mCloseMore(){
     if(data && Array.isArray(data)){
       window.scheduleList = data;
       try{ localStorage.setItem('pm_schedule', JSON.stringify(data)); }catch(e){}
-      if(window._fbReady && typeof renderScheduleList === 'function') renderScheduleList();
+      if(typeof renderScheduleList === 'function') renderScheduleList();
+      if(typeof renderScheduleCalendar === 'function') renderScheduleCalendar();
+      if(typeof renderMainScreen === 'function') renderMainScreen();
     }
   });
 
@@ -11118,6 +11120,7 @@ function mCloseMore(){
     if(data && Array.isArray(data)){
       window.evList = data;
       try{ localStorage.setItem('pm_ev', JSON.stringify(data)); }catch(e){}
+      if(typeof renderEvList === 'function') renderEvList();
     }
   });
 
