@@ -717,13 +717,13 @@ body.is-mobile #churchModal .modal > div:first-child > div:last-child {
   width:100% !important;
 }
 
-/* 사진+교회지체+신앙생활 영역 → 세로 배치 */
+/* 사진+출석여부+신앙생활 영역 → 세로 배치 */
 body.is-mobile #churchModal div[style*="grid-column:1/-1"][style*="display:flex"][style*="align-items:center"] {
   flex-direction:column !important;
   align-items:flex-start !important;
   gap:10px !important;
 }
-/* 교회지체여부 · 신앙생활 단계 → 가로 나란히 */
+/* 출석여부 · 신앙생활 단계 → 가로 나란히 */
 body.is-mobile #churchModal div[style*="padding-left:10px;border-left"] {
   border-left:none !important;
   border-top:1px solid #e2e8f0 !important;
@@ -905,7 +905,7 @@ body.is-mobile #page-church-register .filter-row select {
     </div>
     <div class="combo-nav">
       <div class="group-nav">
-        <button class="group-btn active" id="tab-register" onclick="showTab('register',this)">교적부</button>
+        <button class="group-btn active" id="tab-register" onclick="showTab('register',this)">조소록</button>
         <button class="group-btn" id="tab-map" onclick="showTab('map',this)">🗺 OpenMap</button>
         <button class="group-btn" id="tab-stats" onclick="showTab('stats',this)">통계</button>
         <button class="group-btn" id="tab-schedule" onclick="showTab('schedule',this)">일정</button>
@@ -1654,7 +1654,7 @@ body.is-mobile #page-church-register .filter-row select {
     <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#1e3a5f;border-radius:10px 10px 0 0;margin:-16px -16px 12px;">
       <div style="font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:6px;">⛪ 교적부
         <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.2);color:#fff;border-radius:99px;padding:2px 10px 2px 8px;font-size:11px;font-weight:700;"><span style="font-size:10px;opacity:.7;">총</span><span id="churchTotalCount" style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:800;">0</span><span style="font-size:10px;opacity:.7;">명</span></span>
-        <span onclick="showNonMemberList()" style="display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.15);color:#fff;border-radius:99px;padding:2px 10px 2px 8px;font-size:11px;font-weight:700;cursor:pointer;">비지체&nbsp;<span id="churchNonMemberCount" style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:800;">0</span><span style="font-size:10px;opacity:.7;">명</span></span>
+        <span onclick="showNonMemberList()" style="display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.15);color:#fff;border-radius:99px;padding:2px 10px 2px 8px;font-size:11px;font-weight:700;cursor:pointer;">미출석&nbsp;<span id="churchNonMemberCount" style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:800;">0</span><span style="font-size:10px;opacity:.7;">명</span></span>
       </div>
       <button onclick="goMainScreen()" style="background:rgba(255,255,255,.15);border:none;width:28px;height:28px;border-radius:50%;font-size:14px;color:#fff;cursor:pointer;">✕</button>
     </div>
@@ -1984,12 +1984,12 @@ body.is-mobile #page-church-register .filter-row select {
   </div>
 </div>
 
-<!-- 교적부 통계 모달 -->
+<!-- 조소록 통계 모달 -->
 <div class="overlay hidden" id="churchStatsModal" onclick="if(event.target===this)closeChurchStats()">
   <div style="background:#fff;border-radius:14px;width:95%;max-width:920px;height:88vh;box-shadow:0 12px 40px rgba(0,0,0,.2);display:flex;flex-direction:column;overflow:hidden;">
     <!-- 헤더 -->
     <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #e2e8f0;flex-shrink:0;background:#1e3a5f;border-radius:14px 14px 0 0;">
-      <div style="font-size:14px;font-weight:700;color:#fff;">📊 교적부 통계</div>
+      <div style="font-size:14px;font-weight:700;color:#fff;">📊 조소록 통계</div>
       <button onclick="closeChurchStats()" style="background:rgba(255,255,255,.15);border:none;width:28px;height:28px;border-radius:50%;font-size:14px;color:#fff;cursor:pointer;">✕</button>
     </div>
     <!-- 바디: 사이드탭 + 콘텐츠 -->
@@ -2207,7 +2207,7 @@ body.is-mobile #page-church-register .filter-row select {
 <div class="overlay hidden" id="churchModal">
   <div class="modal" style="max-width:640px;max-height:92vh;overflow-y:auto;padding:16px;">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
-      <div style="font-size:13px;font-weight:700;color:#1e293b;" id="churchModalTitle">⛪ 교적 등록</div>
+      <div style="font-size:13px;font-weight:700;color:#1e293b;" id="churchModalTitle">⛪ 조소록 등록</div>
       <div style="display:flex;align-items:center;gap:8px;">
         <!-- 등록일 -->
         <span style="font-size:10px;color:#64748b;font-weight:600;white-space:nowrap;">등록일</span>
@@ -2241,13 +2241,13 @@ body.is-mobile #page-church-register .filter-row select {
         </div>
         <input type="file" id="chPhotoInput" accept="image/*" style="display:none;" onchange="handleChPhoto(this)">
         <canvas id="chPhotoCanvas" style="display:none;"></canvas>
-        <!-- 교회지체여부 -->
+        <!-- 출석여부 -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding-left:10px;border-left:1px solid #e2e8f0;">
-          <div style="font-size:10px;font-weight:700;color:#64748b;white-space:nowrap;">교회지체여부</div>
+          <div style="font-size:10px;font-weight:700;color:#64748b;white-space:nowrap;">출석여부</div>
           <select id="chIsMember" style="padding:4px 8px;border:1.5px solid #d1d5db;border-radius:7px;font-size:12px;font-family:inherit;font-weight:700;color:#1e293b;background:#fff;cursor:pointer;outline:none;width:88px;"
             onchange="this.style.background=this.value==='no'?'#fee2e2':this.value==='yes'?'#f0fdf4':'#fff';this.style.borderColor=this.value==='no'?'#fca5a5':this.value==='yes'?'#86efac':'#d1d5db';">
-            <option value="yes">✅ 예</option>
-            <option value="no">❌ 아니오</option>
+            <option value="yes">✅ 출석</option>
+            <option value="no">❌ 미출석</option>
           </select>
         </div>
         <!-- 신앙생활 단계 버튼 -->
@@ -2404,11 +2404,11 @@ body.is-mobile #page-church-register .filter-row select {
 </div>
 
 <!-- 주소검색: Daum 우편번호 팝업 -->
-<!-- 비지체 명단 모달 -->
+<!-- 미출석 명단 모달 -->
 <div id="nonMemberModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:3000;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:14px;width:92%;max-width:480px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 16px 48px rgba(0,0,0,.2);overflow:hidden;">
     <div style="background:#475569;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-      <div style="color:#fff;font-size:13px;font-weight:700;">👤 비지체 성도 명단</div>
+      <div style="color:#fff;font-size:13px;font-weight:700;">👤 미출석 성도 명단</div>
       <button onclick="document.getElementById('nonMemberModal').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;line-height:1;">✕</button>
     </div>
     <div id="nonMemberList" style="flex:1;overflow-y:auto;padding:10px;"></div>
@@ -4500,7 +4500,10 @@ function nlViewerClose(){
 let _prayLists = (()=>{ try{ return JSON.parse(localStorage.getItem('pm_pray_lists')||'[]'); }catch(e){ return []; } })();
 let _currentPrayId = null;
 
-function _savePrayLists(){ try{ localStorage.setItem('pm_pray_lists', JSON.stringify(_prayLists)); }catch(e){} }
+function _savePrayLists(){
+  try{ localStorage.setItem('pm_pray_lists', JSON.stringify(_prayLists)); }catch(e){}
+  if(window.saveToFirebase) window.saveToFirebase('prayLists', _prayLists);
+}
 
 function initPrayListPanel(){
   const d = new Date().toISOString().substring(0,10);
@@ -5696,7 +5699,7 @@ function renderChurchList(){
       `<td style="${td}font-weight:600;cursor:pointer;position:relative;" ondblclick="openChurchProfile(${c.id})" title="더블클릭 → 개인정보 보기"
         onmouseenter="showFamilyTooltip(event,${c.id});this.querySelector('.map-pin-btn')&&(this.querySelector('.map-pin-btn').style.display='inline-flex')"
         onmouseleave="hideFamilyTooltip();this.querySelector('.map-pin-btn')&&(this.querySelector('.map-pin-btn').style.display='none')">
-        <span style="color:${(c.isMember==='no'||isDeceased(c))?'#94a3b8':(()=>{const f=Array.isArray(c.faith)?c.faith:(c.faith?[c.faith]:[]);if(f.includes(1))return '#1d4ed8';if(f.includes(2))return '#d97706';if(f.includes(3))return '#64748b';return '#1e293b';})()};font-weight:${(Array.isArray(c.faith)?c.faith.length:(c.faith||0))?'700':'600'};${(c.isMember==='no'||isDeceased(c))?'text-decoration:line-through;opacity:.6;':''}">${c.name||''}</span>${c.isMember==='no'?'<span style="font-size:9px;color:#ef4444;margin-left:3px;font-weight:700;">비지체</span>':''}${isDeceased(c)?'<span style="font-size:9px;color:#64748b;margin-left:3px;font-weight:700;">🕊️소천</span>':''}
+        <span style="color:${(c.isMember==='no'||isDeceased(c))?'#94a3b8':(()=>{const f=Array.isArray(c.faith)?c.faith:(c.faith?[c.faith]:[]);if(f.includes(1))return '#1d4ed8';if(f.includes(2))return '#d97706';if(f.includes(3))return '#64748b';return '#1e293b';})()};font-weight:${(Array.isArray(c.faith)?c.faith.length:(c.faith||0))?'700':'600'};${(c.isMember==='no'||isDeceased(c))?'text-decoration:line-through;opacity:.6;':''}">${c.name||''}</span>${c.isMember==='no'?'<span style="font-size:9px;color:#ef4444;margin-left:3px;font-weight:700;">미출석</span>':''}${isDeceased(c)?'<span style="font-size:9px;color:#64748b;margin-left:3px;font-weight:700;">🕊️소천</span>':''}
         ${c.family ? '<span style="font-size:9px;color:#0284c7;margin-left:3px;">👨‍👩‍👧</span>' : ''}
         ${c.address ? `<button class="map-pin-btn" onclick="event.stopPropagation();openMapForMember(${c.id})" title="지도에서 보기"
           style="display:none;margin-left:4px;padding:1px 5px;border:none;border-radius:4px;background:#0284c7;color:#fff;font-size:9px;cursor:pointer;vertical-align:middle;align-items:center;gap:2px;">📍</button>` : ''}
@@ -5779,16 +5782,30 @@ let _currentAdmin = (()=>{ try{ return JSON.parse(sessionStorage.getItem('pm_cur
 
 // 최고관리자가 없으면 기본 생성
 if(!_adminList.length){
-  _adminList = [{
-    name:'관리자', id:'admin',
-    pwHash: _simpleHash('1234'),
-    perm:{ edit:true, delete:true, add:true, export:true, isAdmin:true }
-  }];
+  _adminList = [
+    {
+      name:'관리자', id:'admin',
+      pwHash: _simpleHash('1234'),
+      role:'super',
+      perm:{ edit:true, delete:true, add:true, export:true, isAdmin:true }
+    },
+    {
+      name:'일반성도', id:'2015',
+      pwHash: _simpleHash('0004'),
+      role:'member',
+      linkedChurchId: null,
+      linkedChurchName: null,
+      perm:{ edit:false, delete:false, add:false, export:false, isAdmin:false }
+    }
+  ];
   _saveAdmins();
 }
 
 function _simpleHash(s){ let h=0; for(let i=0;i<s.length;i++) h=(Math.imul(31,h)+s.charCodeAt(i))|0; return h.toString(36); }
-function _saveAdmins(){ try{ localStorage.setItem('pm_admins', JSON.stringify(_adminList)); }catch(e){} }
+function _saveAdmins(){
+  try{ localStorage.setItem('pm_admins', JSON.stringify(_adminList)); }catch(e){}
+  if(window.saveToFirebase) window.saveToFirebase('admins', _adminList);
+}
 
 // -- 일반성도 여부 & 기능별 접근 권한 ----------------------------
 function isMemberRole(){
@@ -7041,7 +7058,7 @@ function openChurchModal(){
   if(isLocked()){ showToast('🔒 잠금 상태입니다. 환경설정에서 해제하세요','error'); return; }
   editingChurchId=null; _chHistories=[]; _chHistEditIdx=null; loadFaithLifeUI(null);
   _chPhoto=null; _updateChPhotoUI(null);
-  document.getElementById('churchModalTitle').textContent='⛪ 교적 등록';
+  document.getElementById('churchModalTitle').textContent='⛪ 조소록 등록';
   ['chName','chJob','chAddress','chAddressDetail','chFamily','chEvanTarget','chGyo','chGuyeok','chEtc','chPhone'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('chHoebul').value='';
   const hc = document.getElementById('chHoebulCustom');
@@ -7082,7 +7099,7 @@ function openEditChurch(id){
     faithVal.forEach(n=>{ if(n>=1&&n<=3) _faithFlags[n]=true; });
     _faithLevel=Math.max(0,...faithVal);
     _renderFaithBtns();
-    // 교회지체여부 로드
+    // 출석여부 로드
     const memSel2=document.getElementById('chIsMember');
     if(memSel2){
       memSel2.value=c.isMember||'yes';
@@ -7341,7 +7358,7 @@ function _buildPrintHTML(){
       <td style="font-size:9px;">${c.address||''}</td>
     </tr>`).join('');
   return `<!DOCTYPE html><html><head>
-    <meta charset="UTF-8"><title>교적부</title>
+    <meta charset="UTF-8"><title>조소록</title>
     <style>
       @page { size: A4 landscape; margin: 12mm; }
       body { font-family: 'Malgun Gothic', sans-serif; font-size: 11px; color: #1e293b; }
@@ -7393,7 +7410,7 @@ function exportChurchExcel(){
   const ws=XLSX.utils.aoa_to_sheet(rows);
   ws['!cols']=[10,10,5,5,13,24,12,10,12,10,8,8,8,8,14].map(w=>({wch:w}));
   const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'교적부');
+  XLSX.utils.book_append_sheet(wb,ws,'조소록');
   XLSX.writeFile(wb,'교적부_'+getLocalDateStr()+'.xlsx');
   showToast('📊 엑셀 저장 완료','success');
 }
@@ -7686,7 +7703,7 @@ function exportChurchExcel(){
   const ws=XLSX.utils.aoa_to_sheet(rows);
   ws['!cols']=[10,10,5,5,13,24,12,10,12,10,8,8,8,8,14].map(w=>({wch:w}));
   const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'교적부');
+  XLSX.utils.book_append_sheet(wb,ws,'조소록');
   XLSX.writeFile(wb,'교적부_'+getLocalDateStr()+'.xlsx');
   showToast('📊 엑셀 저장 완료','success');
 }
@@ -7913,7 +7930,7 @@ function showNonMemberList(){
   if(!modal||!listEl) return;
 
   if(!list.length){
-    listEl.innerHTML='<div style="padding:24px;text-align:center;color:#94a3b8;font-size:13px;">비지체 성도가 없습니다</div>';
+    listEl.innerHTML='<div style="padding:24px;text-align:center;color:#94a3b8;font-size:13px;">미출석 성도가 없습니다</div>';
   } else {
     listEl.innerHTML = list.map(c=>`
       <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:4px;background:#f8fafc;border:1px solid #e2e8f0;cursor:pointer;"
@@ -8277,7 +8294,7 @@ function _renderGuyeokGrid(){
   const isFall5=c=>c.faithLife&&c.faithLife['f5'];
   const isNonMember=c=>c.isMember==='no';
   const allG=[...new Set(churchList.filter(c=>!isFall5(c)&&c.guyeok).map(c=>c.guyeok))].sort();
-  const sf=_guyeokShowFall,sd=_guyeokShowDiff;
+  const sf=isMemberRole()?false:_guyeokShowFall, sd=isMemberRole()?false:_guyeokShowDiff;
   const hasOvl=sf||sd;
   const sz=hasOvl?190:180;
 
@@ -8405,9 +8422,15 @@ function setGuyeokMode(mode){
   const bN=document.getElementById('guyeokModeNormal');
   if(bN){bN.style.background=isNorm?MC.normal:'#f8fafc';bN.style.color=isNorm?'#fff':MC.normal;bN.style.borderColor=isNorm?MC.normal:'#e2e8f0';}
   const bF=document.getElementById('guyeokModeFall');
-  if(bF){bF.style.background=_guyeokShowFall?MC.fall:'#f8fafc';bF.style.color=_guyeokShowFall?'#fff':MC.fall;bF.style.borderColor=_guyeokShowFall?MC.fall:'#e2e8f0';}
+  if(bF){
+    bF.style.display = isMemberRole() ? 'none' : '';
+    bF.style.background=_guyeokShowFall?MC.fall:'#f8fafc';bF.style.color=_guyeokShowFall?'#fff':MC.fall;bF.style.borderColor=_guyeokShowFall?MC.fall:'#e2e8f0';
+  }
   const bD=document.getElementById('guyeokModeDiff');
-  if(bD){bD.style.background=_guyeokShowDiff?MC.diff:'#f8fafc';bD.style.color=_guyeokShowDiff?'#fff':MC.diff;bD.style.borderColor=_guyeokShowDiff?MC.diff:'#e2e8f0';}
+  if(bD){
+    bD.style.display = isMemberRole() ? 'none' : '';
+    bD.style.background=_guyeokShowDiff?MC.diff:'#f8fafc';bD.style.color=_guyeokShowDiff?'#fff':MC.diff;bD.style.borderColor=_guyeokShowDiff?MC.diff:'#e2e8f0';
+  }
   _renderGuyeokGrid();
 }
 
@@ -8936,7 +8959,7 @@ function switchStatTab(tab){
   const commonHeader = `
     ${d.hoebulBadge}
     <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">${d.guyeokBtns2}</div>
-    ${d.fallen5List.length ? `
+    ${(!isMemberRole() && d.fallen5List.length) ? `
     <div id="_fallen5Banner" style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
       <span style="font-size:18px;">⚠️</span>
       <div>
@@ -8944,7 +8967,7 @@ function switchStatTab(tab){
         <div style="font-size:11px;color:#ef4444;margin-top:1px;">완전한 침체 및 실족 상태 · 이 탭 통계에서 제외됨</div>
       </div>
     </div>` : ''}
-    ${d.deceasedList&&d.deceasedList.length ? `
+    ${(!isMemberRole() && d.deceasedList&&d.deceasedList.length) ? `
     <div style="background:#f8fafc;border:1px solid #94a3b8;border-radius:8px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
       <span style="font-size:14px;">🕊️</span>
       <div>
@@ -8952,14 +8975,14 @@ function switchStatTab(tab){
         <div style="font-size:11px;color:#64748b;margin-top:1px;">주님 품에 안기신 성도 · 통계에서 제외됨</div>
       </div>
     </div>` : ''}
-    ${(()=>{const nm=d.src.filter(c=>c.isMember==='no');return nm.length?`
+    ${(!isMemberRole() && (()=>{const nm=d.src.filter(c=>c.isMember==='no');return nm.length?`
     <div style="background:#fef3c7;border:1px solid #fbbf24;border-radius:8px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
       <span style="font-size:14px;">⚠️</span>
       <div>
-        <div style="font-size:12px;font-weight:700;color:#92400e;">비지체 성도 — ${nm.length}명 (${nm.map(c=>c.name).join(', ')})</div>
-        <div style="font-size:11px;color:#b45309;margin-top:1px;">교회 지체가 아닌 성도 · 전체 성도수에서 제외됨</div>
+        <div style="font-size:12px;font-weight:700;color:#92400e;">미출석 성도 — ${nm.length}명 (${nm.map(c=>c.name).join(', ')})</div>
+        <div style="font-size:11px;color:#b45309;margin-top:1px;">미출석 성도 · 전체 성도수에서 제외됨</div>
       </div>
-    </div>`:'';})()}
+    </div>`:'';})()) || ''}
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
       ${d.kpi('출석 성도', d.src.filter(c=>c.isMember!=='no').length, '#1e293b', d.src.filter(c=>c.isMember!=='no').map(c=>c.name))}
       ${d.kpi('남성', d.src.filter(c=>c.isMember!=='no'&&c.gender==='남').length, '#0284c7', d.src.filter(c=>c.isMember!=='no'&&c.gender==='남').map(c=>c.name))}
@@ -10464,6 +10487,7 @@ function saveChurchInfo(){
     sloganVerse: document.getElementById('settingSloganVerse')?.value.trim() || '',
   };
   try{ localStorage.setItem('pm_church_info', JSON.stringify(_churchInfo)); }catch(e){}
+  if(window.saveToFirebase) window.saveToFirebase('churchInfo', _churchInfo);
   showToast('✅ 교회정보가 저장되었습니다','success');
   // 메인화면 갱신
   renderMainScreen();
@@ -10632,7 +10656,7 @@ function renderMainScreen(){
       <div style="font-size:13px;font-weight:700;color:#1e293b;margin-bottom:10px;">⚡ 빠른 메뉴</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
         ${[
-          {icon:'📋', label:'교적부',   action:`closeMainScreen();showTab('register',document.getElementById('tab-register'))`},
+          {icon:'📋', label:'조소록',   action:`closeMainScreen();showTab('register',document.getElementById('tab-register'))`},
           {icon:'📊', label:'통계',     action:`closeMainScreen();showTab('stats',document.getElementById('tab-stats'))`},
           {icon:'📅', label:'일정',     action:`closeMainScreen();showTab('schedule',document.getElementById('tab-schedule'))`},
           {icon:'✝',  label:'전도',     action:`closeMainScreen();showTab('evangelize',document.getElementById('tab-evangelize'))`},
@@ -10979,6 +11003,126 @@ function mCloseMore(){
 <!-- ════ 하단 탭바 (모바일 모드에서만 표시) ════ -->
 
 
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDNRHfD80RN59Ryko-mIdVwOkwgzstY4OE",
+    authDomain: "pyeonchang-church.firebaseapp.com",
+    databaseURL: "https://pyeonchang-church-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "pyeonchang-church",
+    storageBucket: "pyeonchang-church.firebasestorage.app",
+    messagingSenderId: "755953408176",
+    appId: "1:755953408176:web:31e4008d1341e6dc854375"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  window._fbDb = db;
+  window._fbRef = ref;
+  window._fbSet = set;
+  window._fbGet = get;
+  window._fbOnValue = onValue;
+
+  // Firebase 연결 상태 표시
+  const badge = document.getElementById('fbStatusBadge');
+
+  // ── 데이터 저장 함수 ──────────────────────────────────────
+  window.saveToFirebase = function(key, data) {
+    if(!window._fbDb) return;
+    set(ref(db, key), data)
+      .then(() => console.log(key + ' 저장 완료'))
+      .catch(e => console.error(key + ' 저장 실패:', e));
+  };
+
+  // ── 초기 데이터 로드 및 실시간 동기화 ────────────────────
+  window._fbReady = false;
+
+  // churchList 실시간 동기화
+  onValue(ref(db, 'churchList'), (snapshot) => {
+    const data = snapshot.val();
+    if(data && Array.isArray(data)){
+      window.churchList = data;
+      try{ localStorage.setItem('pm_church', JSON.stringify(data)); }catch(e){}
+      if(window._fbReady && typeof renderChurchList === 'function'){
+        renderChurchList();
+        if(typeof renderChurchSummary === 'function') renderChurchSummary();
+      }
+    }
+    if(!window._fbReady){
+      window._fbReady = true;
+      if(badge){ badge.textContent = '🔥 Firebase'; badge.style.background='#fff3e0'; badge.style.color='#e65100'; }
+    }
+  });
+
+  // scheduleList 실시간 동기화
+  onValue(ref(db, 'scheduleList'), (snapshot) => {
+    const data = snapshot.val();
+    if(data && Array.isArray(data)){
+      window.scheduleList = data;
+      try{ localStorage.setItem('pm_schedule', JSON.stringify(data)); }catch(e){}
+      if(window._fbReady && typeof renderScheduleList === 'function') renderScheduleList();
+    }
+  });
+
+  // admins 실시간 동기화
+  onValue(ref(db, 'admins'), (snapshot) => {
+    const data = snapshot.val();
+    if(data && Array.isArray(data)){
+      window._adminList = data;
+      try{ localStorage.setItem('pm_admins', JSON.stringify(data)); }catch(e){}
+    }
+  });
+
+  // churchInfo 실시간 동기화
+  onValue(ref(db, 'churchInfo'), (snapshot) => {
+    const data = snapshot.val();
+    if(data){
+      window._churchInfo = data;
+      try{ localStorage.setItem('pm_church_info', JSON.stringify(data)); }catch(e){}
+    }
+  });
+
+  // evList 실시간 동기화
+  onValue(ref(db, 'evList'), (snapshot) => {
+    const data = snapshot.val();
+    if(data && Array.isArray(data)){
+      window.evList = data;
+      try{ localStorage.setItem('pm_ev', JSON.stringify(data)); }catch(e){}
+    }
+  });
+
+  // attendance 실시간 동기화
+  onValue(ref(db, 'attendance'), (snapshot) => {
+    const data = snapshot.val();
+    if(data){
+      window._attendanceData = data;
+      try{ localStorage.setItem('pm_attendance', JSON.stringify(data)); }catch(e){}
+    }
+  });
+
+  // newsletter 실시간 동기화
+  onValue(ref(db, 'newsletter'), (snapshot) => {
+    const data = snapshot.val();
+    if(data && Array.isArray(data)){
+      window._nlItems = data;
+      try{ localStorage.setItem('pm_newsletter', JSON.stringify(data)); }catch(e){}
+    }
+  });
+
+  // prayLists 실시간 동기화
+  onValue(ref(db, 'prayLists'), (snapshot) => {
+    const data = snapshot.val();
+    if(data && Array.isArray(data)){
+      window._prayLists = data;
+      try{ localStorage.setItem('pm_pray_lists', JSON.stringify(data)); }catch(e){}
+    }
+  });
+
+  console.log('Firebase 초기화 완료');
+</script>
 <!-- PWA Service Worker 등록 (서버 환경에서만 작동) -->
 <script>
 if('serviceWorker' in navigator && location.protocol !== 'file:'){
