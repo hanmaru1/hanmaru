@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성경 - 평창교회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1923;--bg2:#1a2535;--bg3:#243045;--gold:#c9a96e;--gold2:#e8c98a;--text:#e8e0d0;--text2:#a09880;--border:rgba(201,169,110,.2);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:linear-gradient(135deg,#0a1520,#1a2535);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;}
+.logo{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--gold);white-space:nowrap;}
+.controls{display:flex;gap:6px;flex:1;flex-wrap:wrap;}
+select{padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:inherit;outline:none;cursor:pointer;}
+.go-btn{padding:8px 16px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);border:none;border-radius:8px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;}
+.back-btn{padding:8px 12px;background:rgba(201,169,110,.15);border:1px solid var(--border);border-radius:8px;color:var(--gold);font-size:12px;font-family:inherit;cursor:pointer;text-decoration:none;white-space:nowrap;}
+.main{max-width:700px;margin:0 auto;padding:20px 16px;}
+.info-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px;text-align:center;}
+.info-title{font-family:'Noto Serif KR',serif;font-size:20px;color:var(--gold);margin-bottom:8px;}
+.info-sub{font-size:13px;color:var(--text2);line-height:1.6;}
+.link-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;}
+.link-title{font-size:13px;font-weight:700;color:var(--gold2);margin-bottom:10px;}
+.link-btn{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:13px;font-family:inherit;cursor:pointer;text-decoration:none;margin-bottom:8px;transition:all .15s;}
+.link-btn:hover{background:rgba(201,169,110,.12);border-color:var(--gold);color:var(--gold2);}
+.link-btn .icon{font-size:20px;flex-shrink:0;}
+.link-btn .info{text-align:left;}
+.link-btn .info b{display:block;font-weight:700;margin-bottom:2px;}
+.link-btn .info span{font-size:11px;color:var(--text2);}
+.quick-section{margin-bottom:20px;}
+.section-title{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
+.quick-btn{padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;color:var(--text2);font-size:12px;font-family:inherit;cursor:pointer;transition:all .15s;text-align:left;}
+.quick-btn:hover{background:rgba(201,169,110,.12);color:var(--gold2);border-color:var(--gold);}
+.quick-btn b{display:block;font-size:13px;color:var(--text);margin-bottom:2px;}
+.verse-result{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px;display:none;}
+.verse-ref{font-size:12px;color:var(--gold);font-weight:700;margin-bottom:10px;}
+.verse-text-area{font-family:'Noto Serif KR',serif;font-size:17px;line-height:1.9;color:var(--text);}
+.verse-actions{display:flex;gap:8px;margin-top:14px;}
+.vbtn{padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;border:none;}
+.vbtn-card{background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;}
+.vbtn-copy{background:var(--bg3);color:var(--text);border:1px solid var(--border);}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">✝ 성경</div>
+  <div class="controls">
+    <select id="bookSel" onchange="updateChapters()"></select>
+    <select id="chapSel"></select>
+    <button class="go-btn" onclick="openExternal()">🔗 열기</button>
+  </div>
+  <a href="index.html" class="back-btn">← 앱</a>
+</header>
+
+<div class="main">
+
+  <!-- 자주 찾는 구절 -->
+  <div class="quick-section">
+    <div class="section-title">⭐ 자주 찾는 말씀</div>
+    <div class="quick-grid" id="quickGrid"></div>
+  </div>
+
+  <!-- 구절 결과 -->
+  <div class="verse-result" id="verseResult">
+    <div class="verse-ref" id="verseRef"></div>
+    <div class="verse-text-area" id="verseTextArea"></div>
+    <div class="verse-actions">
+      <button class="vbtn vbtn-card" onclick="sendToCard()">✨ 말씀카드</button>
+      <button class="vbtn vbtn-copy" onclick="copyVerse()">📋 복사</button>
+    </div>
+  </div>
+
+  <!-- 외부 성경 링크 -->
+  <div class="link-box">
+    <div class="link-title">📖 성경 전체 열람</div>
+    <a class="link-btn" href="https://holybible.biblenote.kr/read.html" target="_blank">
+      <span class="icon">📖</span>
+      <div class="info"><b>홀리바이블 biblenote (개역한글)</b><span>17개 번역본 · 성경사전 · 원어 분석</span></div>
+    </a>
+    <a class="link-btn" href="https://www.bskorea.or.kr/bible/korbibReadpage.php" target="_blank">
+      <span class="icon">✝️</span>
+      <div class="info"><b>대한성서공회 (개역개정)</b><span>공식 개역개정 성경</span></div>
+    </a>
+    <a class="link-btn" href="https://www.bible.com/ko/bible/88/GEN.1.KRV" target="_blank">
+      <span class="icon">🌐</span>
+      <div class="info"><b>YouVersion 성경앱</b><span>개역한글 · 개역개정 · 오디오</span></div>
+    </a>
+  </div>
+
+</div>
+
+<script>
+const OT=[
+  {n:"창세기",a:"창",c:50},{n:"출애굽기",a:"출",c:40},{n:"레위기",a:"레",c:27},{n:"민수기",a:"민",c:36},
+  {n:"신명기",a:"신",c:34},{n:"여호수아",a:"수",c:24},{n:"사사기",a:"삿",c:21},{n:"룻기",a:"룻",c:4},
+  {n:"사무엘상",a:"삼상",c:31},{n:"사무엘하",a:"삼하",c:24},{n:"열왕기상",a:"왕상",c:22},{n:"열왕기하",a:"왕하",c:25},
+  {n:"역대상",a:"대상",c:29},{n:"역대하",a:"대하",c:36},{n:"에스라",a:"스",c:10},{n:"느헤미야",a:"느",c:13},
+  {n:"에스더",a:"에",c:10},{n:"욥기",a:"욥",c:42},{n:"시편",a:"시",c:150},{n:"잠언",a:"잠",c:31},
+  {n:"전도서",a:"전",c:12},{n:"아가",a:"아",c:8},{n:"이사야",a:"사",c:66},{n:"예레미야",a:"렘",c:52},
+  {n:"예레미야애가",a:"애",c:5},{n:"에스겔",a:"겔",c:48},{n:"다니엘",a:"단",c:12},{n:"호세아",a:"호",c:14},
+  {n:"요엘",a:"욜",c:3},{n:"아모스",a:"암",c:9},{n:"오바댜",a:"옵",c:1},{n:"요나",a:"욘",c:4},
+  {n:"미가",a:"미",c:7},{n:"나훔",a:"나",c:3},{n:"하박국",a:"합",c:3},{n:"스바냐",a:"습",c:3},
+  {n:"학개",a:"학",c:2},{n:"스가랴",a:"슥",c:14},{n:"말라기",a:"말",c:4}
+];
+const NT=[
+  {n:"마태복음",a:"마",c:28},{n:"마가복음",a:"막",c:16},{n:"누가복음",a:"눅",c:24},{n:"요한복음",a:"요",c:21},
+  {n:"사도행전",a:"행",c:28},{n:"로마서",a:"롬",c:16},{n:"고린도전서",a:"고전",c:16},{n:"고린도후서",a:"고후",c:13},
+  {n:"갈라디아서",a:"갈",c:6},{n:"에베소서",a:"엡",c:6},{n:"빌립보서",a:"빌",c:4},{n:"골로새서",a:"골",c:4},
+  {n:"데살로니가전서",a:"살전",c:5},{n:"데살로니가후서",a:"살후",c:3},{n:"디모데전서",a:"딤전",c:6},{n:"디모데후서",a:"딤후",c:4},
+  {n:"디도서",a:"딛",c:3},{n:"빌레몬서",a:"몬",c:1},{n:"히브리서",a:"히",c:13},{n:"야고보서",a:"약",c:5},
+  {n:"베드로전서",a:"벧전",c:5},{n:"베드로후서",a:"벧후",c:3},{n:"요한일서",a:"요일",c:5},{n:"요한이서",a:"요이",c:1},
+  {n:"요한삼서",a:"요삼",c:1},{n:"유다서",a:"유",c:1},{n:"요한계시록",a:"계",c:22}
+];
+const ALL=[...OT,...NT];
+
+// 자주 찾는 구절 데이터
+const QUICK=[
+  {ref:"요3:16",text:"하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 저를 믿는 자마다 멸망치 않고 영생을 얻게 하려 하심이니라"},
+  {ref:"시23:1",text:"여호와는 나의 목자시니 내가 부족함이 없으리로다"},
+  {ref:"빌4:13",text:"내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라"},
+  {ref:"롬8:28",text:"하나님을 사랑하는 자 곧 그 뜻대로 부르심을 입은 자들에게는 모든 것이 합력하여 선을 이루느니라"},
+  {ref:"마11:28",text:"수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라"},
+  {ref:"렘29:11",text:"너희를 향한 나의 생각은 재앙이 아니라 곧 평안이요 너희 장래에 소망을 주려 하는 생각이라"},
+  {ref:"사40:31",text:"여호와를 앙망하는 자는 새 힘을 얻으리니 독수리의 날개치며 올라감 같을 것이요"},
+  {ref:"잠3:5",text:"너는 마음을 다하여 여호와를 의뢰하고 네 명철을 의지하지 말라"},
+  {ref:"수1:9",text:"마음을 강하게 하고 담대히 하라 두려워 말며 놀라지 말라 네 하나님 여호와가 너와 함께하느니라"},
+  {ref:"요14:6",text:"내가 곧 길이요 진리요 생명이니 나로 말미암지 않고는 아버지께로 올 자가 없느니라"},
+  {ref:"시19:1",text:"하늘이 하나님의 영광을 선포하고 궁창이 그 손으로 하신 일을 나타내는도다"},
+  {ref:"살전5:16",text:"항상 기뻐하라 쉬지 말고 기도하라 범사에 감사하라"},
+];
+
+let _curRef='', _curText='';
+
+function init(){
+  // 책 선택 초기화
+  const sel=document.getElementById('bookSel');
+  sel.innerHTML=
+    '<optgroup label="── 구약 ──">'+OT.map((b,i)=>`<option value="${i}">${b.n}</option>`).join('')+'</optgroup>'+
+    '<optgroup label="── 신약 ──">'+NT.map((b,i)=>`<option value="${i+39}">${b.n}</option>`).join('')+'</optgroup>';
+  updateChapters();
+
+  // 자주 찾는 구절 버튼
+  document.getElementById('quickGrid').innerHTML=QUICK.map(q=>`
+    <button class="quick-btn" onclick="showVerse('${q.ref}','${q.text.replace(/'/g,"\\'")}')">
+      <b>${q.ref}</b>${q.text.substring(0,18)}...
+    </button>`).join('');
+}
+
+function updateChapters(){
+  const idx=parseInt(document.getElementById('bookSel').value);
+  const cs=document.getElementById('chapSel');
+  cs.innerHTML=Array.from({length:ALL[idx].c},(_,i)=>`<option value="${i+1}">${i+1}장</option>`).join('');
+}
+
+function showVerse(ref, text){
+  _curRef=ref; _curText=text;
+  document.getElementById('verseRef').textContent='📖 '+ref+' (개역한글)';
+  document.getElementById('verseTextArea').textContent=text;
+  const r=document.getElementById('verseResult');
+  r.style.display='block';
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function openExternal(){
+  const idx=parseInt(document.getElementById('bookSel').value)+1;
+  const chap=document.getElementById('chapSel').value;
+  window.open(`https://holybible.biblenote.kr/read.html?version=개역한글&book=${idx}&chapter=${chap}`,'_blank');
+}
+
+function copyVerse(){
+  if(!_curText) return;
+  navigator.clipboard.writeText(`"${_curText}" - ${_curRef} (개역한글)`).then(()=>showToast('📋 복사되었습니다!'));
+}
+
+function sendToCard(){
+  if(!_curText) return;
+  const p=new URLSearchParams({ref:_curRef,text:_curText});
+  window.location.href='index.html?verse='+encodeURIComponent(JSON.stringify({ref:_curRef,text:_curText}))+'#versecard';
+}
+
+function showToast(msg){
+  const el=document.createElement('div');
+  el.style.cssText='position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#1a2535;color:#e8c98a;border:1px solid rgba(201,169,110,.3);padding:10px 20px;border-radius:99px;font-size:13px;z-index:9999;font-family:inherit;';
+  el.textContent=msg; document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2500);
+}
+
+init();
+</script>
+</body>
+</html>
