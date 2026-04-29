@@ -11544,6 +11544,32 @@ function speak(text){
   window.speechSynthesis.speak(u);
 }
 
+// bible.html에서 말씀카드로 넘어올 때 처리
+(function(){
+  try{
+    const vc = sessionStorage.getItem('verseCard');
+    if(vc && location.hash === '#versecard'){
+      const data = JSON.parse(vc);
+      sessionStorage.removeItem('verseCard');
+      // 서식탭 → 말씀카드 패널로 이동
+      setTimeout(()=>{
+        showTab('form', document.getElementById('tab-form'));
+        setTimeout(()=>{
+          onFormTypeChange('versecard');
+          setTimeout(()=>{
+            const refEl = document.getElementById('verseRef');
+            const textEl = document.getElementById('verseText');
+            if(refEl) refEl.value = data.ref || '';
+            if(textEl) textEl.value = data.text || '';
+            if(data.text) autoFillVerse && autoFillVerse(data.ref);
+            showToast('✅ 말씀카드로 불러왔습니다!', 'success');
+          }, 200);
+        }, 300);
+      }, 500);
+    }
+  }catch(e){}
+})();
+
 function goMainScreen(){
   if(!_currentAdmin){ showLoginRequired(); return; }
   document.querySelectorAll('[id^="page-"]').forEach(p=>{
