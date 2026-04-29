@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성경 - 평창교회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1923;--bg2:#1a2535;--bg3:#243045;--gold:#c9a96e;--gold2:#e8c98a;--text:#e8e0d0;--text2:#a09880;--border:rgba(201,169,110,.2);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:linear-gradient(135deg,#0a1520,#1a2535);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.logo{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--gold);display:flex;align-items:center;gap:8px;}
+.back-btn{margin-left:auto;padding:8px 14px;background:rgba(201,169,110,.15);border:1px solid var(--border);border-radius:8px;color:var(--gold);font-size:12px;font-family:inherit;cursor:pointer;text-decoration:none;white-space:nowrap;}
+.main{max-width:600px;margin:0 auto;padding:30px 18px;}
+
+/* 메인 링크 버튼 */
+.bible-link{
+  display:flex;align-items:center;gap:16px;
+  padding:22px 24px;
+  background:linear-gradient(135deg,#1a2535,#243045);
+  border:1.5px solid var(--gold);
+  border-radius:16px;
+  text-decoration:none;
+  margin-bottom:16px;
+  transition:all .2s;
+}
+.bible-link:hover{background:linear-gradient(135deg,#243045,#2d3d5a);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,169,110,.2);}
+.bible-link .icon{font-size:32px;flex-shrink:0;}
+.bible-link .info{}
+.bible-link .info b{display:block;font-size:16px;font-weight:700;color:var(--gold2);margin-bottom:4px;}
+.bible-link .info span{font-size:12px;color:var(--text2);line-height:1.5;}
+.bible-link .arrow{margin-left:auto;font-size:20px;color:var(--gold);flex-shrink:0;}
+
+.section-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin:24px 0 12px;}
+
+/* 자주 찾는 구절 */
+.verse-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px;}
+.verse-item{padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+.verse-item:last-child{border-bottom:none;}
+.verse-item:hover{background:rgba(201,169,110,.08);}
+.verse-ref{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:4px;}
+.verse-text{font-family:'Noto Serif KR',serif;font-size:14px;line-height:1.7;color:var(--text);}
+
+/* 구절 상세 팝업 */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:flex-end;justify-content:center;}
+.overlay.show{display:flex;}
+.popup{background:var(--bg2);border:1px solid var(--border);border-radius:20px 20px 0 0;padding:24px;width:100%;max-width:600px;}
+.popup-ref{font-size:12px;color:var(--gold);font-weight:700;margin-bottom:12px;}
+.popup-text{font-family:'Noto Serif KR',serif;font-size:17px;line-height:1.9;color:var(--text);margin-bottom:20px;}
+.popup-btns{display:flex;gap:8px;}
+.pbtn{flex:1;padding:12px;border-radius:10px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;border:none;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;}
+.pbtn-primary{background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;}
+.pbtn-sec{background:var(--bg3);color:var(--text);border:1px solid var(--border);}
+.pbtn-close{background:transparent;color:var(--text2);font-size:22px;flex:0;padding:0 8px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">✝ 성경</div>
+  <a href="index.html" class="back-btn">← 앱으로</a>
+</header>
+
+<div class="main">
+
+  <div class="section-title">📖 성경 열람</div>
+
+  <a class="bible-link" href="https://holybible.biblenote.kr/read.html" target="_blank">
+    <span class="icon">📖</span>
+    <div class="info">
+      <b>홀리바이블 성경 읽기</b>
+      <span>개역한글 · 개역개정 · NIV · KJV 등 17개 번역본<br>성경 검색 · 성경사전 · 원어 분석 지원</span>
+    </div>
+    <span class="arrow">›</span>
+  </a>
+
+  <a class="bible-link" href="https://holybible.biblenote.kr/search.html" target="_blank">
+    <span class="icon">🔍</span>
+    <div class="info">
+      <b>성경 구절 검색</b>
+      <span>키워드로 구절 찾기<br>예) 사랑, 믿음, 소망</span>
+    </div>
+    <span class="arrow">›</span>
+  </a>
+
+  <div class="section-title">⭐ 자주 찾는 말씀 (클릭하면 상세 보기)</div>
+
+  <div class="verse-box">
+    <div class="verse-item" onclick="showVerse('요한복음 3:16','하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 저를 믿는 자마다 멸망치 않고 영생을 얻게 하려 하심이니라')">
+      <div class="verse-ref">요한복음 3:16</div>
+      <div class="verse-text">하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니...</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('시편 23:1-6','여호와는 나의 목자시니 내가 부족함이 없으리로다 그가 나를 푸른 초장에 누이시며 쉴 만한 물가로 인도하시는도다 내 영혼을 소생시키시고 자기 이름을 위하여 의의 길로 인도하시는도다 내가 사망의 음침한 골짜기로 다닐지라도 해를 두려워하지 않을 것은 주께서 나와 함께하심이라 주의 지팡이와 막대기가 나를 안위하시나이다 주께서 내 원수의 목전에서 내게 상을 베푸시고 기름으로 내 머리에 바르셨으니 내 잔이 넘치나이다 나의 평생에 선하심과 인자하심이 정녕 나를 따르리니 내가 여호와의 집에 영원히 거하리로다')">
+      <div class="verse-ref">시편 23:1-6 (전체)</div>
+      <div class="verse-text">여호와는 나의 목자시니 내가 부족함이 없으리로다...</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('빌립보서 4:13','내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라')">
+      <div class="verse-ref">빌립보서 4:13</div>
+      <div class="verse-text">내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('로마서 8:28','우리가 알거니와 하나님을 사랑하는 자 곧 그 뜻대로 부르심을 입은 자들에게는 모든 것이 합력하여 선을 이루느니라')">
+      <div class="verse-ref">로마서 8:28</div>
+      <div class="verse-text">모든 것이 합력하여 선을 이루느니라...</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('마태복음 11:28','수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라')">
+      <div class="verse-ref">마태복음 11:28</div>
+      <div class="verse-text">수고하고 무거운 짐 진 자들아 다 내게로 오라...</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('예레미야 29:11','나 여호와가 말하노라 너희를 향한 나의 생각은 내가 아나니 재앙이 아니라 곧 평안이요 너희 장래에 소망을 주려 하는 생각이라')">
+      <div class="verse-ref">예레미야 29:11</div>
+      <div class="verse-text">너희 장래에 소망을 주려 하는 생각이라...</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('이사야 40:31','오직 여호와를 앙망하는 자는 새 힘을 얻으리니 독수리의 날개치며 올라감 같을 것이요 달음박질하여도 곤비치 아니하겠고 걸어가도 피곤치 아니하리로다')">
+      <div class="verse-ref">이사야 40:31</div>
+      <div class="verse-text">여호와를 앙망하는 자는 새 힘을 얻으리니...</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('요한복음 14:6','예수께서 가라사대 내가 곧 길이요 진리요 생명이니 나로 말미암지 않고는 아버지께로 올 자가 없느니라')">
+      <div class="verse-ref">요한복음 14:6</div>
+      <div class="verse-text">내가 곧 길이요 진리요 생명이니...</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('데살로니가전서 5:16-18','항상 기뻐하라 쉬지 말고 기도하라 범사에 감사하라 이는 그리스도 예수 안에서 너희를 향하신 하나님의 뜻이니라')">
+      <div class="verse-ref">데살로니가전서 5:16-18</div>
+      <div class="verse-text">항상 기뻐하라 쉬지 말고 기도하라 범사에 감사하라...</div>
+    </div>
+    <div class="verse-item" onclick="showVerse('잠언 3:5-6','너는 마음을 다하여 여호와를 의뢰하고 네 명철을 의지하지 말라 너는 범사에 그를 인정하라 그리하면 네 길을 지도하시리라')">
+      <div class="verse-ref">잠언 3:5-6</div>
+      <div class="verse-text">너는 마음을 다하여 여호와를 의뢰하고...</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 구절 상세 팝업 -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeVerse()">
+  <div class="popup">
+    <div class="popup-ref" id="popRef"></div>
+    <div class="popup-text" id="popText"></div>
+    <div class="popup-btns">
+      <button class="pbtn pbtn-primary" onclick="sendToCard()">✨ 말씀카드</button>
+      <button class="pbtn pbtn-sec" onclick="copyVerse()">📋 복사</button>
+      <button class="pbtn pbtn-close" onclick="closeVerse()">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let _ref='', _text='';
+
+function showVerse(ref, text){
+  _ref=ref; _text=text;
+  document.getElementById('popRef').textContent='📖 '+ref+' (개역한글)';
+  document.getElementById('popText').textContent=text;
+  document.getElementById('overlay').classList.add('show');
+}
+function closeVerse(){ document.getElementById('overlay').classList.remove('show'); }
+function copyVerse(){
+  navigator.clipboard.writeText('"'+_text+'" - '+_ref+' (개역한글)').then(()=>{
+    showToast('📋 복사되었습니다!'); closeVerse();
+  });
+}
+function sendToCard(){
+  sessionStorage.setItem('verseCard',JSON.stringify({ref:_ref,text:_text}));
+  window.location.href='index.html#versecard';
+}
+function showToast(msg){
+  const el=document.createElement('div');
+  el.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1a2535;color:#e8c98a;border:1px solid rgba(201,169,110,.3);padding:10px 20px;border-radius:99px;font-size:13px;z-index:9999;font-family:inherit;';
+  el.textContent=msg; document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2500);
+}
+</script>
+</body>
+</html>
