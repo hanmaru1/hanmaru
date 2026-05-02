@@ -1,12 +1,13 @@
 {
-  "name": "평창교회",
+  "name": "평창교회 매니저",
   "short_name": "평창교회",
-  "description": "평창교회 교적 및 교회 관리 앱",
+  "description": "평창교회 사역 관리 앱",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#1e3a5f",
+  "orientation": "portrait",
+  "background_color": "#fdf6e3",
   "theme_color": "#1e3a5f",
-  "orientation": "portrait-primary",
   "lang": "ko",
   "icons": [
     {
@@ -21,9 +22,5 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "categories": [
-    "productivity",
-    "utilities"
   ]
 }
